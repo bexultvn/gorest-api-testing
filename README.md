@@ -43,10 +43,12 @@ gorest-api-testing/
 ├── docs/
 │   ├── test_plan.md
 │   ├── requirements.md
-│   └── test_cases.md
+│   ├── test_cases.md
+│   └── test_summary.md
 │
 ├── pytest.ini
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+
 
