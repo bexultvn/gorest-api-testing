@@ -1,3 +1,4 @@
+import pytest
 import requests
 
 BASE_URL = "https://gorest.co.in/public/v2"
@@ -8,6 +9,7 @@ BASE_URL = "https://gorest.co.in/public/v2"
 # -------------------------------------------------
 
 # TC-001 — Get users list
+@pytest.mark.smoke
 def test_get_users_list(api):
     response = api.get("/users")
     assert response.status_code == 200
@@ -21,6 +23,7 @@ def test_get_users_list(api):
 
 
 # TC-002 — Get user by valid ID
+@pytest.mark.smoke
 def test_get_user_by_valid_id(api, created_user):
     user_id = created_user["id"]
 
@@ -30,6 +33,7 @@ def test_get_user_by_valid_id(api, created_user):
 
 
 # TC-003 — Get user by non-existing ID
+@pytest.mark.negative
 def test_get_user_by_non_existing_id(api):
     response = api.get("/users/999999999")
     assert response.status_code == 404
@@ -40,6 +44,7 @@ def test_get_user_by_non_existing_id(api):
 # -------------------------------------------------
 
 # TC-004 — Create user with valid payload
+@pytest.mark.smoke
 def test_create_user_success(api, valid_user_payload):
     response = api.post("/users", valid_user_payload)
     assert response.status_code == 201
@@ -53,12 +58,14 @@ def test_create_user_success(api, valid_user_payload):
 
 
 # TC-005 — Create user with empty payload
+@pytest.mark.negative
 def test_create_user_empty_payload(api):
     response = api.post("/users", {})
     assert response.status_code == 422
 
 
 # TC-006 — Create user with invalid email
+@pytest.mark.negative
 def test_create_user_invalid_email(api, valid_user_payload):
     valid_user_payload["email"] = "invalid_email"
 
@@ -67,6 +74,7 @@ def test_create_user_invalid_email(api, valid_user_payload):
 
 
 # TC-007 — Create user with missing required field (name)
+@pytest.mark.negative
 def test_create_user_missing_name(api, valid_user_payload):
     valid_user_payload.pop("name")
 
@@ -75,6 +83,7 @@ def test_create_user_missing_name(api, valid_user_payload):
 
 
 # TC-008 — Create user with missing required field (email)
+@pytest.mark.negative
 def test_create_user_missing_email(api, valid_user_payload):
     valid_user_payload.pop("email")
 
@@ -83,6 +92,8 @@ def test_create_user_missing_email(api, valid_user_payload):
 
 
 # TC-009 — Create user without authorization
+@pytest.mark.auth
+@pytest.mark.negative
 def test_create_user_without_authorization(valid_user_payload):
     response = requests.post(
         f"{BASE_URL}/users",
@@ -101,6 +112,7 @@ def test_create_user_without_authorization(valid_user_payload):
 # -------------------------------------------------
 
 # TC-010 — Update existing user
+@pytest.mark.smoke
 def test_update_existing_user(api, created_user, update_user_payload):
     user_id = created_user["id"]
 
@@ -114,6 +126,7 @@ def test_update_existing_user(api, created_user, update_user_payload):
 
 
 # TC-011 — Update user with invalid payload
+@pytest.mark.negative
 def test_update_user_invalid_payload(api, created_user):
     user_id = created_user["id"]
 
@@ -122,12 +135,15 @@ def test_update_user_invalid_payload(api, created_user):
 
 
 # TC-012 — Update non-existing user
+@pytest.mark.negative
 def test_update_non_existing_user(api, update_user_payload):
     response = api.put("/users/999999999", update_user_payload)
     assert response.status_code == 404
 
 
 # TC-013 — Update user without authorization
+@pytest.mark.auth
+@pytest.mark.negative
 def test_update_user_without_authorization(created_user):
     user_id = created_user["id"]
 
@@ -149,6 +165,7 @@ def test_update_user_without_authorization(created_user):
 # -------------------------------------------------
 
 # TC-014 — Delete existing user
+@pytest.mark.smoke
 def test_delete_existing_user(api, created_user):
     user_id = created_user["id"]
 
@@ -160,12 +177,15 @@ def test_delete_existing_user(api, created_user):
 
 
 # TC-015 — Delete non-existing user
+@pytest.mark.negative
 def test_delete_non_existing_user(api):
     response = api.delete("/users/999999999")
     assert response.status_code == 404
 
 
 # TC-016 — Delete user without authorization
+@pytest.mark.auth
+@pytest.mark.negative
 def test_delete_user_without_authorization(created_user):
     user_id = created_user["id"]
 
