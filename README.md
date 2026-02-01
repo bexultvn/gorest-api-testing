@@ -40,14 +40,12 @@ gorest-api-testing/
 ├── utils/
 │   └── api_client.py
 │
-├── data/
-│   └── payloads.py
-│
 ├── docs/
 │   ├── test_plan.md
 │   ├── requirements.md
 │   └── test_cases.md
 │
+├── pytest.ini
 ├── requirements.txt
 ├── README.md
 └── .gitignore
