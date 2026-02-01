@@ -44,8 +44,11 @@ gorest-api-testing/
 │   └── payloads.py
 │
 ├── docs/
-│   └── test_plan.md
+│   ├── test_plan.md
+│   ├── requirements.md
+│   └── test_cases.md
 │
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+
