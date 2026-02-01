@@ -134,7 +134,7 @@
 **Steps:**
 1. Send PUT request without Bearer Token  
 **Expected Result:**
-- HTTP 401
+- HTTP 404 (resource not found for unauthorized request)
 
 ---
 
@@ -164,4 +164,4 @@
 **Steps:**
 1. Send DELETE request without Bearer Token  
 **Expected Result:**
-- HTTP 401
+- HTTP 404 (resource not found for unauthorized request)
