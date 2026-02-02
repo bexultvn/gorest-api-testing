@@ -50,5 +50,77 @@ gorest-api-testing/
 ├── requirements.txt
 ├── README.md
 └── .gitignore
+```
+
+---
+
+## How to Run Tests
+
+### 1. Clone the repository
+```bash
+git clone https://github.com/your-username/gorest-api-testing.git
+cd gorest-api-testing
+```
+### 2. Create and activate a virtual environment
+macOS / Linux
+```bash
+python3 -m venv venv
+source venv/bin/activate
+```
+Windows
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+
+### 3. Install dependencies
+```bash
+pip install -r requirements.txt
+```
+
+### 4. Set GoREST API token
 
 
+This project requires a valid GoREST Bearer Token.
+macOS / Linux
+```bash
+export GOREST_TOKEN=your_token_here
+```
+Windows (PowerShell)
+```bash
+setx GOREST_TOKEN your_token_here
+```
+Restart the terminal after setting the environment variable.
+
+### 5. Run all tests
+```bash
+pytest -v
+```
+
+### 6. Run tests by markers
+
+Run smoke tests:
+```bash
+
+pytest -m smoke
+```
+
+
+Run negative tests:
+```bash
+pytest -m negative
+```
+
+Run authorization tests:
+```bash
+pytest -m auth
+```
+
+Run smoke tests excluding negative scenarios:
+```bash
+pytest -m "smoke and not negative"
+```
+### 7. View available pytest markers
+```bash
+pytest --markers
+```
